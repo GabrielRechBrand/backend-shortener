@@ -11,4 +11,5 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
 
     Url findById(long id);
 
+    Url findByShortenedUrl(String shortened);
 }
