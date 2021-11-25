@@ -1,15 +1,15 @@
-package br.com.urlshortener.backendshortener.request;
+package br.com.urlshortener.backendshortener.Dto;
 
 import javax.validation.constraints.NotNull;
 
-public class UrlCreationRequest {
+public class UrlDto {
 
     @NotNull
     private String alias;
     @NotNull
     private String originalUrl;
 
-    public UrlCreationRequest(final String alias, final String originalUrl) {
+    public UrlDto(final String alias, final String originalUrl) {
         this.alias = alias;
         this.originalUrl = originalUrl;
     }
@@ -24,7 +24,7 @@ public class UrlCreationRequest {
 
     @Override
     public String toString() {
-        return "RedirectCreationRequest{" +
+        return "UrlDto{" +
                 "alias='" + alias + '\'' +
                 ", originalUrl='" + originalUrl + '\'' +
                 '}';

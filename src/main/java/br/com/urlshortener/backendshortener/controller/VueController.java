@@ -17,17 +17,13 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 
-@RestController
+@RestController("/app")
 @CrossOrigin(origins = "http://localhost:8081")
 public class VueController {
 
     @Autowired
     private UrlRepository urlRepository;
 
-    @GetMapping("/test/")
-    public List<Url> handleRedirect() {
-        List<Url> urlList = urlRepository.findAll();
-        return urlList;
-    }
+
 
 }

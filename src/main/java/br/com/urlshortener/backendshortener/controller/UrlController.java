@@ -1,17 +1,20 @@
 package br.com.urlshortener.backendshortener.controller;
 
 import br.com.urlshortener.backendshortener.model.Url;
-import br.com.urlshortener.backendshortener.repository.UrlRepository;
-import br.com.urlshortener.backendshortener.request.UrlCreationRequest;
+import br.com.urlshortener.backendshortener.Dto.UrlDto;
 import br.com.urlshortener.backendshortener.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 
@@ -28,9 +31,12 @@ public class UrlController {
     }
 
     @GetMapping("/{alias}")
+    @Transactional
     public ResponseEntity<?> handleRedirect(@PathVariable String alias) throws URISyntaxException {
         Url url = urlService.getUrl(alias);
-        System.out.println(url.getClient().getId());
+        url.setAccessNumber(url.getAccessNumber() + 1);
+        url.setLastAccessDate(Calendar.getInstance());
+        urlService.updateUrl(url);
         URI uri = new URI(url.getOriginalUrl());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(uri);
@@ -38,8 +44,15 @@ public class UrlController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> createRedirect(@Valid @RequestBody UrlCreationRequest urlCreationRequest) {
-        return ResponseEntity.ok(urlService.createUrl(urlCreationRequest));
+    public ResponseEntity<?> createRedirect(@Valid @RequestBody UrlDto urlDto) {
+        return ResponseEntity.ok(urlService.createUrl(urlDto));
     }
+
+    @GetMapping("/urls/all")
+    public List<Url> handleRedirect() {
+        List<Url> urlList = urlService.findAll();
+        return urlList;
+    }
+
 }
 
