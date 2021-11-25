@@ -9,12 +9,23 @@ public class Url {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String shortenedUrl;
+    private String alias;
     private String originalUrl;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     private Client client;  
     private Calendar creationDate;
     private Calendar lastAccessDate;
     private int accessNumber;
+
+    public Url(String alias, String originalUrl) {
+        this.alias = alias;
+        this.originalUrl = originalUrl;
+    }
+
+    public Url() {
+
+    }
 
     public Long getId() {
         return id;
@@ -31,6 +42,15 @@ public class Url {
     public void setShortenedUrl(String shortenedUrl) {
         this.shortenedUrl = shortenedUrl;
     }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
 
     public String getOriginalUrl() {
         return originalUrl;

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UrlRepository extends JpaRepository<Url, Long> {
 
-    Url findById(long id);
+    boolean existsByAlias(String alias);
+    Url findByAlias(String alias);
 
-    Url findByShortenedUrl(String shortened);
 }
