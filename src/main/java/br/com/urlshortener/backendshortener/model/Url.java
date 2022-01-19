@@ -18,10 +18,12 @@ public class Url {
     private Calendar lastAccessDate;
     private int accessNumber;
 
-    public Url(String alias, String originalUrl, Calendar creationDate) {
+    public Url(String shortenedUrl, String alias, String originalUrl, Calendar creationDate, Calendar lastAccessDate) {
+        this.shortenedUrl = shortenedUrl;
         this.alias = alias;
         this.originalUrl = originalUrl;
         this.creationDate = creationDate;
+        this.lastAccessDate = lastAccessDate;
     }
 
     public Url() {
